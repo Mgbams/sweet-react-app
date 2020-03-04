@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
 import parseSwapiUrl from '../utils/parseSwapiUrl';
+import Loader from "react-loader-spinner";
 
 export default class LinkContainer extends Component {
 
@@ -22,7 +23,17 @@ export default class LinkContainer extends Component {
     const { data } = this.state;
 
     if (!data) {
-      return <span>Loading ...</span>;
+      return (
+        <div className="text-center">
+          <Loader
+            type="Circles"
+            color="#00BFFF"
+            height={20}
+            width={30}
+            className="homespinner"
+          />
+        </div>
+      );
     }
 
     const[resource, id ] = parseSwapiUrl(url);

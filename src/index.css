@@ -21,3 +21,9 @@ code {
   margin-top: -25px;
   margin-bottom: -40px;
 }
+.homespinner {
+ 
+  position: relative;
+  bottom: 25px;
+  right: 180px;
+}
