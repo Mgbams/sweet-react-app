@@ -1,11 +1,12 @@
 import React from "react";
 import { Card, ListGroup} from 'react-bootstrap';
 
-const Character = ({ name, gender, birth_year, edited }) => (
-  <Card style={{ width: "18rem" }}>
-    <Card.Header>{name}</Card.Header>
+const Character = ({ name, gender, birth_year, edited, homeworld }) => (
+  <Card style={{ width: "40rem" }}>
+    <Card.Header className="text-center">{name}</Card.Header>
     <ListGroup variant="flush">
-      <ListGroup.Item>Gender: {gender}</ListGroup.Item>
+    <ListGroup.Item><h4>Character</h4></ListGroup.Item>
+      <ListGroup.Item>Gender: { gender}</ListGroup.Item>
       <ListGroup.Item>Birth year: {birth_year}</ListGroup.Item>
     </ListGroup>
     <Card.Footer>

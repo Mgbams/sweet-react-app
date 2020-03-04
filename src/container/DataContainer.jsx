@@ -5,10 +5,23 @@ import { Character } from "../container";
 import Loader from "react-loader-spinner";
 import { Planet } from "../container";
 import { ListGroup } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 const componentsByResource = {
   people: Character,
   planets: Planet
+};
+
+const ListItem = ({ name, url }) => {
+  const matches = url.match(/^https:\/\/swapi\.co\/api\/(\w+)\/(\d+)\/$/);
+  const [match, resource, id] = matches;
+
+  return (
+    <ListGroup.Item>
+      <Link to={`/${resource}/${id}`}>{name}</Link>
+    </ListGroup.Item>
+  );
 };
 
 export default class DataContainer extends Component {
@@ -16,11 +29,10 @@ export default class DataContainer extends Component {
     data: null
   };
 
-  componentDidMount = () => {
+  fetchData = () => {
     const { resource, id } = this.props.match.params;
 
     let url = `https://swapi.co/api/${resource}`;
-    console.log("component did mount");
     if (id) {
       url += `/${id}`;
     }
@@ -30,11 +42,25 @@ export default class DataContainer extends Component {
       .catch(error => console.error(error));
   };
 
-  render = () => {
-    // we use destructuring here. So instead of writing {this.state.data}, we can now write data directly
-    // and we can reference the contents of data afterwards
-    const { data } = this.state;
+  componentDidMount = () => {
+    this.fetchData();
+  };
+
+  componentDidUpdate = prevProps => {
     const { resource, id } = this.props.match.params;
+
+    if (
+      resource !== prevProps.match.params.resource ||
+      id !== prevProps.match.params.id
+    ) {
+      this.setState({ data: null });
+      this.fetchData();
+    }
+  };
+
+  render = () => {
+    const { resource, id } = this.props.match.params;
+    const { data } = this.state;
 
     if (!data) {
       return (
@@ -50,17 +76,25 @@ export default class DataContainer extends Component {
       );
     }
 
-    if (!id) {
+    if (!id && data.results) {
       return (
         <ListGroup>
-          {data.results.map(item => 
-            <ListGroup.Item>{item.name}</ListGroup.Item>
-          )}
+          {data.results.map((item, index) => (
+            <ListItem {...item} key={index} />
+          ))}
         </ListGroup>
       );
     }
 
     const ComponentName = componentsByResource[resource] || "div";
-    return <ComponentName {...data} />;
+
+    return (
+      <div>
+        <Link to={`/${resource}`}>
+          <Button variant="primary">Back to list</Button>
+        </Link>
+        <ComponentName {...data} />
+      </div>
+    );
   };
 }
