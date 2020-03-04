@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import Axios from "axios";
-//import Character from './Character';
 import { Character } from "../container";
 import Loader from "react-loader-spinner";
 import { Planet } from "../container";
 import { ListGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import parseSwapiUrl from "../utils/parseSwapiUrl";
 
 const componentsByResource = {
   people: Character,
@@ -14,8 +14,7 @@ const componentsByResource = {
 };
 
 const ListItem = ({ name, url }) => {
-  const matches = url.match(/^https:\/\/swapi\.co\/api\/(\w+)\/(\d+)\/$/);
-  const [match, resource, id] = matches;
+ const [resource, id] = parseSwapiUrl(url);
 
   return (
     <ListGroup.Item>

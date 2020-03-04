@@ -1,0 +1,1 @@
+export { deafult as parseSwapiUrl } from './parseSwapiUrl';
