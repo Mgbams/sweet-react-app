@@ -1,12 +1,12 @@
 import React from "react";
 import { Card, ListGroup} from 'react-bootstrap';
 
-const Character = ({ name, gender, birth_year, edited }) => (
+const Planet = ({ name, population, gravity, edited }) => (
   <Card style={{ width: "18rem" }}>
     <Card.Header>{name}</Card.Header>
     <ListGroup variant="flush">
-      <ListGroup.Item>Gender: {gender}</ListGroup.Item>
-      <ListGroup.Item>Birth year: {birth_year}</ListGroup.Item>
+      <ListGroup.Item>Population: {population}</ListGroup.Item>
+      <ListGroup.Item>Gravity: {gravity}</ListGroup.Item>
     </ListGroup>
     <Card.Footer>
       <small className="text-muted">
@@ -20,4 +20,4 @@ const Character = ({ name, gender, birth_year, edited }) => (
 // We simply add the proprietes we need in curly braces as {name, gender, birth_year } then we add the names directly
 // without using props as {name}, {gender} e.tc
 
-export default Character;
+export default Planet;
